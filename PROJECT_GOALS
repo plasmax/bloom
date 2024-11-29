@@ -1,0 +1,57 @@
+# Bloom Project Goals
+
+## Primary Objectives
+1. Create a secure intermediary server between sandboxed Python environment and LLMs
+2. Enable safe code execution and project development through LLM guidance
+3. Provide comprehensive project management and development tools
+4. Support both local and cloud deployment options
+
+## Core Features
+1. Python Sandbox Environment
+   - Secure code execution
+   - Resource monitoring and limitations
+   - Virtual environment isolation
+   - Comprehensive error handling
+
+2. LLM Integration
+   - Project requirement analysis
+   - Code review and suggestions
+   - Task breakdown and management
+   - Documentation generation
+
+3. Web Interface
+   - Real-time code editing
+   - Project organization
+   - Task tracking
+   - File management
+
+4. Deployment Options
+   - Local development server
+   - Cloud deployment support (Heroku, AWS, DigitalOcean)
+   - Remote access capabilities
+   - Mobile device support
+
+## Success Criteria
+1. Security
+   - Zero security vulnerabilities in sandbox
+   - Safe code execution guarantee
+   - Secure user authentication
+   - Data protection
+
+2. Usability
+   - Intuitive web interface
+   - Clear documentation
+   - Responsive design
+   - Quick setup process
+
+3. Performance
+   - Fast code execution
+   - Efficient resource usage
+   - Quick LLM response times
+   - Scalable architecture
+
+4. Reliability
+   - Robust error handling
+   - Data persistence
+   - System stability
+   - Backup capabilities
