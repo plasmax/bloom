@@ -32,14 +32,42 @@ Bloom is an intermediary server that interfaces between a sandboxed Python envir
    flask db upgrade
    ```
 
-## Running the Application
+## Development Setup
 
-For local development:
-```bash
-flask run
-```
+For local development with remote access:
 
-For production deployment, refer to the deployment documentation.
+1. Install ngrok:
+   ```bash
+   # On Windows (using chocolatey)
+   choco install ngrok
+   
+   # On macOS
+   brew install ngrok
+   ```
+
+2. Start the Flask development server:
+   ```bash
+   flask run
+   ```
+
+3. In a separate terminal, start ngrok:
+   ```bash
+   ngrok http 5000
+   ```
+
+4. Access your application through the ngrok URL provided
+
+## Docker Deployment
+
+1. Build the Docker image:
+   ```bash
+   docker build -t bloom .
+   ```
+
+2. Run the container:
+   ```bash
+   docker run -p 8000:8000 bloom
+   ```
 
 ## License
 
