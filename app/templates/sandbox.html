@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <div class="md:flex md:items-center md:justify-between mb-6">
+        <div class="flex-1 min-w-0">
+            <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+                Python Sandbox
+            </h2>
+        </div>
+        <div class="mt-4 flex md:mt-0 md:ml-4">
+            <button type="button" id="runCode"
+                    class="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Run Code
+            </button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Code Editor Section -->
+        <div class="bg-white shadow-sm rounded-lg">
+            <div class="p-4">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Code Editor</h3>
+                <div class="relative" style="height: 500px;">
+                    <div id="editor" class="absolute inset-0 font-mono text-sm border border-gray-300 rounded-md"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Output Section -->
+        <div class="bg-white shadow-sm rounded-lg">
+            <div class="p-4">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Output</h3>
+                <div class="bg-gray-50 p-4 rounded-md" style="height: 500px; overflow-y: auto;">
+                    <pre id="output" class="font-mono text-sm whitespace-pre-wrap"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Load Ace Editor -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+<script>
+    // Initialize Ace Editor
+    let editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/python");
+    editor.setOptions({
+        fontSize: "12pt"
+    });
+
+    // Set some sample code
+    editor.setValue(`# Write your Python code here
+print("Hello from Bloom!")`);
+
+    // Handle code execution
+    document.getElementById('runCode').addEventListener('click', async () => {
+        const code = editor.getValue();
+        const outputElement = document.getElementById('output');
+        
+        try {
+            const response = await fetch('/sandbox/execute', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ code: code })
+            });
+
+            const result = await response.json();
+            
+            if (result.success) {
+                outputElement.textContent = result.output;
+                outputElement.className = 'font-mono text-sm whitespace-pre-wrap text-gray-900';
+            } else {
+                outputElement.textContent = `Error: ${result.error}`;
+                outputElement.className = 'font-mono text-sm whitespace-pre-wrap text-red-600';
+            }
+        } catch (error) {
+            outputElement.textContent = `Error: ${error.message}`;
+            outputElement.className = 'font-mono text-sm whitespace-pre-wrap text-red-600';
+        }
+    });
+</script>
+{% endblock %}
